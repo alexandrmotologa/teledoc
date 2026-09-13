@@ -6,7 +6,7 @@
 
 **Self-Hosted Document Scanner for Telegram & The Modern Web**
 
-*Turn crumpled receipts, skewed invoices, and angled paperwork into crisp, archival-grade PDFs directly in Telegram or any browser.*
+*Scan receipts, invoices, and physical paperwork into clean PDFs directly in Telegram or modern web browsers.*
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-18.3-61dafb?style=flat-square&logo=react)](https://react.dev/)
@@ -37,16 +37,16 @@ Most mobile scanner utilities lock core functionality behind costly recurring su
 
 **TeleDoc** provides a self-hosted, private alternative built specifically for Telegram's ecosystem and standalone web environments:
 
-- **Adaptive Dual-Mode Architecture**: Seamlessly scales from a compact Telegram Mini App on iOS/Android to an expansive 3-column Pro Studio on desktop and tablet screens.
+- **Adaptive Dual-Mode Architecture**: Scales from a compact Telegram Mini App on iOS/Android to an expansive 3-column Pro Studio on desktop and tablet screens.
 - **100% In-Browser Computation**: Homography perspective warps, Bradley-Roth binarization, and OCR text extraction happen directly inside the client engine via HTML5 Canvas and WebAssembly.
 - **Zero Document Retention**: Images never touch cloud AI services. Fastify acts solely as an ephemeral PDF compiler and direct pipe back to your Telegram chat.
-- **No Domain Hassles**: Operates seamlessly in local demo mode, private Docker containers, or public Telegram Mini App deployments behind an HTTPS reverse proxy.
+- **No Domain Hassles**: Operates in local demo mode, private Docker containers, or public Telegram Mini App deployments behind an HTTPS reverse proxy.
 
 ---
 
 ## Key Features
 
-### 📐 Computer Vision & Image Processing
+### Computer Vision & Image Processing
 - **4-Point Perspective Warp**: Corrects severe keystoning and angle distortion using bilinear interpolation over an 8-parameter homography matrix ($H$).
 - **Interactive Corner Handles with Magnifying Loupe**: Position document corners down to the single pixel using touch handles paired with an automatic $2\times$ magnification loupe.
 - **Automatic Boundary Detection**: Analyzes high-contrast contours to immediately pre-select document edges when an image is loaded.
@@ -54,12 +54,12 @@ Most mobile scanner utilities lock core functionality behind costly recurring su
 - **Manual Fine-Tuning Sliders**: Micro-adjust threshold sensitivity ($5\%\text{--}30\%$), contrast ($-50\%\text{--}+50\%$), and brightness on the fly.
 - **Color & Grayscale Modes**: Retain colorful tax stamps and blue ink signatures, or switch to clean neutral grayscale.
 
-### ✍️ Document Editing & Personalization
+### Document Editing and Personalization
 - **Digital Signature Pad**: Sign contracts and receipts on a smooth, vector-like touch canvas with variable line width and high-DPI export.
 - **Watermarks & Verification Stamps**: Overlay preset official stamps (`APPROVED`, `PAID`, `CONFIDENTIAL`, `DRAFT`) or type custom watermark labels with angle and opacity tuning.
 - **Movable & Scalable Overlays**: Drag, reposition, and scale signatures and stamps anywhere on the document canvas with direct delete controls.
 
-### 🔍 Recognition & Multi-Page PDF Assembly
+### Recognition and Multi-Page PDF Assembly
 - **Client-Side Multilingual OCR**: Extract machine text directly within the browser using WebAssembly Tesseract.js across English, Romanian, French, German, and Spanish.
 - **Multi-Page Document Carousel**: Rearrange pages, rotate individual sheets in $90^\circ$ increments, or add new snaps via camera or gallery.
 - **Flexible PDF Page Sizing**: Export as standardized ISO A4, US Letter, or original image aspect ratio (`Fit Page`) with adjustable JPEG compression ratios.
@@ -68,7 +68,7 @@ Most mobile scanner utilities lock core functionality behind costly recurring su
 
 ---
 
-## Visual Showcase (Mobile Telegram Mini App)
+## Mobile Interface Overview
 
 | Perspective Correction & Loupe | Magic B&W & Manual Fine-Tuning |
 | :---: | :---: |
