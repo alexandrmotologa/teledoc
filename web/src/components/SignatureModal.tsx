@@ -14,7 +14,6 @@ export const SignatureModal: React.FC<SignatureModalProps> = ({
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [hasDrawn, setHasDrawn] = useState(false);
   const [inkColor, setInkColor] = useState<string>('#1e40af'); // Navy Blue by default
   const [lineWidth, setLineWidth] = useState<number>(3);
   const [strokeHistory, setStrokeHistory] = useState<ImageData[]>([]);
@@ -33,7 +32,6 @@ export const SignatureModal: React.FC<SignatureModalProps> = ({
 
     // Clear with transparent background
     ctx.clearRect(0, 0, width, height);
-    setHasDrawn(false);
     setStrokeHistory([]);
   }, [isOpen]);
 
@@ -62,7 +60,6 @@ export const SignatureModal: React.FC<SignatureModalProps> = ({
     e.currentTarget.setPointerCapture(e.pointerId);
     saveState();
     setIsDrawing(true);
-    setHasDrawn(true);
 
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -106,7 +103,6 @@ export const SignatureModal: React.FC<SignatureModalProps> = ({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    setHasDrawn(false);
     setStrokeHistory([]);
   };
 
@@ -122,13 +118,12 @@ export const SignatureModal: React.FC<SignatureModalProps> = ({
     if (previous) {
       ctx.putImageData(previous, 0, 0);
       setStrokeHistory(newHistory);
-      if (newHistory.length === 0) setHasDrawn(false);
     }
   };
 
   const handleConfirm = () => {
     const canvas = canvasRef.current;
-    if (!canvas || !hasDrawn) return;
+    if (!canvas) return;
 
     // Trim bounding box around the signature for tight placement
     const ctx = canvas.getContext('2d');
@@ -294,8 +289,7 @@ export const SignatureModal: React.FC<SignatureModalProps> = ({
           </button>
           <button
             onClick={handleConfirm}
-            disabled={!hasDrawn}
-            className="btn-primary text-xs py-2 px-4 flex items-center gap-1.5 disabled:opacity-40"
+            className="btn-primary text-xs py-2 px-4 flex items-center gap-1.5"
           >
             <Check className="w-4 h-4" />
             <span>Apply to Document</span>

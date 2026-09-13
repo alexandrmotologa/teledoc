@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Point, Quad } from '../utils/perspective';
 import { autoDetectCorners } from '../utils/autoDetectCorners';
 import { LoupeOverlay } from './LoupeOverlay';
-import { Wand2, RotateCcw, Check, Sparkles } from 'lucide-react';
+import { Wand2, RotateCcw, Check, Sparkles, ArrowLeft } from 'lucide-react';
 
 interface CornerAdjusterViewProps {
   imageSrc: string;
@@ -15,6 +15,7 @@ export const CornerAdjusterView: React.FC<CornerAdjusterViewProps> = ({
   imageSrc,
   initialCorners,
   onConfirm,
+  onCancel,
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);
@@ -174,15 +175,26 @@ export const CornerAdjusterView: React.FC<CornerAdjusterViewProps> = ({
   return (
     <div className="flex flex-col h-full w-full select-none" style={{ position: 'relative' }}>
       {/* Top action toolbar */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 glass-panel mb-2">
-        <div className="flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-sky-400" />
-          <span className="text-sm font-semibold text-white tracking-wide">Adjust Document Corners</span>
+      <div className="flex items-center justify-between px-3 py-2 sm:px-4 sm:py-3 border-b border-white/10 glass-panel mb-2 gap-2">
+        <div className="flex items-center gap-2 min-w-0">
+          {onCancel && (
+            <button
+              onClick={onCancel}
+              className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors flex-shrink-0"
+              title="Cancel corner adjustment"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </button>
+          )}
+          <div className="flex items-center gap-1.5 min-w-0">
+            <Sparkles className="w-4 h-4 text-sky-400 flex-shrink-0" />
+            <span className="text-xs sm:text-sm font-bold text-white tracking-wide truncate">Adjust Corners</span>
+          </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 flex-shrink-0">
           <button
             onClick={handleAutoDetect}
-            className="btn-secondary text-xs py-1.5 px-3 flex items-center gap-1.5"
+            className="btn-secondary text-[11px] sm:text-xs py-1.5 px-2.5 flex items-center gap-1"
             title="Auto detect document boundaries"
           >
             <Wand2 className="w-3.5 h-3.5 text-sky-400" />
@@ -190,7 +202,7 @@ export const CornerAdjusterView: React.FC<CornerAdjusterViewProps> = ({
           </button>
           <button
             onClick={handleResetCorners}
-            className="btn-secondary text-xs py-1.5 px-3 flex items-center gap-1.5"
+            className="btn-secondary text-[11px] sm:text-xs py-1.5 px-2.5 flex items-center gap-1"
             title="Expand to full photo"
           >
             <RotateCcw className="w-3.5 h-3.5 text-slate-400" />
@@ -300,6 +312,7 @@ export const CornerAdjusterView: React.FC<CornerAdjusterViewProps> = ({
       {/* Bottom confirmation button */}
       <div className="pt-3 pb-1 flex justify-center">
         <button
+          id="btn-confirm-crop"
           onClick={() => onConfirm(corners)}
           className="btn-primary w-full py-3.5 text-base flex items-center justify-center gap-2"
         >

@@ -17,9 +17,15 @@
 
 <br/>
 
-<img src="docs/images/demo_walkthrough.gif?raw=true" alt="TeleDoc Interactive Demo Walkthrough" width="380" style="border-radius: 16px; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 20px 40px rgba(0,0,0,0.5);" />
+<img src="docs/images/screenshot_studio_desktop.png?raw=true" alt="TeleDoc Desktop Pro Studio Layout" width="100%" style="border-radius: 14px; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 20px 50px rgba(0,0,0,0.6);" />
 
-<p align="center"><em>Real-time end-to-end capture showing perspective warp, Bradley-Roth thresholding, signature signing, stamp placement, and PDF assembly.</em></p>
+<p align="center"><em>TeleDoc Pro Studio Layout (Desktop / Tablet): Left-rail page filmstrip, center dark canvas stage, and right-rail inspector drawer with live tuning sliders and document tools.</em></p>
+
+<br/>
+
+<img src="docs/images/demo_walkthrough.gif?raw=true" alt="TeleDoc Mobile Telegram Mini App Interactive Walkthrough" width="360" style="border-radius: 16px; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 20px 40px rgba(0,0,0,0.5);" />
+
+<p align="center"><em>Mobile Telegram Mini App Walkthrough: 4-point homography warp, fine-tuning drawer, vector signature signing, official stamp overlay, client OCR, and PDF compilation.</em></p>
 
 </div>
 
@@ -31,6 +37,7 @@ Most mobile scanner utilities lock core functionality behind costly recurring su
 
 **TeleDoc** provides a self-hosted, private alternative built specifically for Telegram's ecosystem and standalone web environments:
 
+- **Adaptive Dual-Mode Architecture**: Seamlessly scales from a compact Telegram Mini App on iOS/Android to an expansive 3-column Pro Studio on desktop and tablet screens.
 - **100% In-Browser Computation**: Homography perspective warps, Bradley-Roth binarization, and OCR text extraction happen directly inside the client engine via HTML5 Canvas and WebAssembly.
 - **Zero Document Retention**: Images never touch cloud AI services. Fastify acts solely as an ephemeral PDF compiler and direct pipe back to your Telegram chat.
 - **No Domain Hassles**: Operates seamlessly in local demo mode, private Docker containers, or public Telegram Mini App deployments behind an HTTPS reverse proxy.
@@ -49,7 +56,7 @@ Most mobile scanner utilities lock core functionality behind costly recurring su
 
 ### ✍️ Document Editing & Personalization
 - **Digital Signature Pad**: Sign contracts and receipts on a smooth, vector-like touch canvas with variable line width and high-DPI export.
-- **Watermarks & Verification Stamps**: Overlay preset official stamps (`APPROVED`, `PAID`, `CONFIDENTIAL`, `DRAFT`) or type custom watermark labels.
+- **Watermarks & Verification Stamps**: Overlay preset official stamps (`APPROVED`, `PAID`, `CONFIDENTIAL`, `DRAFT`) or type custom watermark labels with angle and opacity tuning.
 - **Movable & Scalable Overlays**: Drag, reposition, and scale signatures and stamps anywhere on the document canvas with direct delete controls.
 
 ### 🔍 Recognition & Multi-Page PDF Assembly
@@ -61,7 +68,7 @@ Most mobile scanner utilities lock core functionality behind costly recurring su
 
 ---
 
-## Visual Showcase
+## Visual Showcase (Mobile Telegram Mini App)
 
 | Perspective Correction & Loupe | Magic B&W & Manual Fine-Tuning |
 | :---: | :---: |
@@ -72,6 +79,11 @@ Most mobile scanner utilities lock core functionality behind costly recurring su
 | :---: | :---: |
 | <img src="docs/images/screenshot_signed_doc.png?raw=true" width="340" alt="Signed Document with Stamp" /> | <img src="docs/images/screenshot_ocr.png?raw=true" width="340" alt="Multilingual OCR" /> |
 | *Touch-drawn signature and official watermark stamp* | *WASM-powered text recognition with word count* |
+
+| Watermark & Stamp Customizer | PDF Export & Compression Options |
+| :---: | :---: |
+| <img src="docs/images/screenshot_stamp.png?raw=true" width="340" alt="Watermark Customizer" /> | <img src="docs/images/screenshot_export.png?raw=true" width="340" alt="PDF Export Dialog" /> |
+| *Preset chips, angle slider, opacity & color palette* | *ISO A4 / Letter format, title, and compression presets* |
 
 ---
 
