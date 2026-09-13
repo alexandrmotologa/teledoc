@@ -9,12 +9,13 @@ interface ExportPdfBody {
   pages: string[];
   title?: string;
   chatId?: number | string;
+  pageSize?: 'a4' | 'letter' | 'fit';
 }
 
 export async function exportApiRoutes(fastify: FastifyInstance): Promise<void> {
   // Compiles multi-page PDF document
   fastify.post<{ Body: ExportPdfBody }>('/api/export-pdf', async (request, reply) => {
-    const { pages, title, chatId } = request.body || {};
+    const { pages, title, chatId, pageSize } = request.body || {};
 
     if (!pages || !Array.isArray(pages) || pages.length === 0) {
       return reply.status(400).send({ error: 'At least one page image is required' });
@@ -23,6 +24,7 @@ export async function exportApiRoutes(fastify: FastifyInstance): Promise<void> {
     try {
       const pdfBytes = await compilePdfFromImages(pages, {
         title: title || 'TeleDoc Scanned Document',
+        pageSize: pageSize || 'a4',
       });
 
       const filename = `${(title || 'Scanned_Document').replace(/[^a-zA-Z0-9_-]/g, '_')}.pdf`;

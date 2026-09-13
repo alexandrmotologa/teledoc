@@ -100,7 +100,8 @@ export function toGrayscale(imageData: ImageData): ImageData {
  */
 export function applyFilter(
   sourceCanvas: HTMLCanvasElement,
-  filterType: FilterType
+  filterType: FilterType,
+  threshold: number = 15
 ): HTMLCanvasElement {
   if (filterType === 'original') {
     return sourceCanvas;
@@ -116,7 +117,7 @@ export function applyFilter(
   let processedData: ImageData;
   switch (filterType) {
     case 'magic-bw':
-      processedData = bradleyRothThreshold(imgData);
+      processedData = bradleyRothThreshold(imgData, 0.125, threshold);
       break;
     case 'enhanced-color':
       processedData = enhanceDocumentColor(imgData);
@@ -137,3 +138,46 @@ export function applyFilter(
   }
   return outCanvas;
 }
+
+/**
+ * Adjusts brightness and contrast of a canvas.
+ * brightness: -50 to +50
+ * contrast: -50 to +50
+ */
+export function applyFineTuning(
+  sourceCanvas: HTMLCanvasElement,
+  brightness: number = 0,
+  contrast: number = 0
+): HTMLCanvasElement {
+  if (brightness === 0 && contrast === 0) {
+    return sourceCanvas;
+  }
+
+  const ctx = sourceCanvas.getContext('2d');
+  if (!ctx) return sourceCanvas;
+
+  const width = sourceCanvas.width;
+  const height = sourceCanvas.height;
+  const imgData = ctx.getImageData(0, 0, width, height);
+  const data = imgData.data;
+
+  // Contrast factor formula
+  const cFactor = (259 * (contrast + 255)) / (255 * (259 - contrast));
+
+  for (let i = 0; i < data.length; i += 4) {
+    // Apply contrast then brightness
+    data[i]     = Math.min(255, Math.max(0, cFactor * (data[i] - 128) + 128 + brightness));
+    data[i + 1] = Math.min(255, Math.max(0, cFactor * (data[i + 1] - 128) + 128 + brightness));
+    data[i + 2] = Math.min(255, Math.max(0, cFactor * (data[i + 2] - 128) + 128 + brightness));
+  }
+
+  const outCanvas = document.createElement('canvas');
+  outCanvas.width = width;
+  outCanvas.height = height;
+  const outCtx = outCanvas.getContext('2d');
+  if (outCtx) {
+    outCtx.putImageData(imgData, 0, 0);
+  }
+  return outCanvas;
+}
+

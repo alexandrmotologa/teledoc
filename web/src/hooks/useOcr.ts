@@ -20,11 +20,11 @@ export function useOcr() {
     error: null,
   });
 
-  const runOcr = useCallback(async (imageInput: string | HTMLCanvasElement) => {
+  const runOcr = useCallback(async (imageInput: string | HTMLCanvasElement, lang: string = 'eng') => {
     setState({
       isProcessing: true,
       progress: 0.05,
-      status: 'Initializing OCR engine...',
+      status: `Initializing OCR engine (${lang})...`,
       text: '',
       wordCount: 0,
       error: null,
@@ -33,7 +33,7 @@ export function useOcr() {
     let worker: Awaited<ReturnType<typeof createWorker>> | null = null;
 
     try {
-      worker = await createWorker('eng', 1, {
+      worker = await createWorker(lang, 1, {
         logger: (m) => {
           if (m.status === 'recognizing text') {
             setState((prev) => ({

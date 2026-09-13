@@ -9,6 +9,7 @@ interface OcrResultModalProps {
   status: string;
   text: string;
   wordCount: number;
+  onReRunOcr?: (lang: string) => void;
 }
 
 export const OcrResultModal: React.FC<OcrResultModalProps> = ({
@@ -19,8 +20,11 @@ export const OcrResultModal: React.FC<OcrResultModalProps> = ({
   status,
   text,
   wordCount,
+  onReRunOcr,
 }) => {
   const [copied, setCopied] = useState(false);
+  const [selectedLang, setSelectedLang] = useState<string>('eng');
+
 
   if (!isOpen) return null;
 
@@ -70,12 +74,32 @@ export const OcrResultModal: React.FC<OcrResultModalProps> = ({
               </p>
             </div>
           </div>
-          <button
-            onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            {/* Language Selector */}
+            <select
+              value={selectedLang}
+              disabled={isProcessing}
+              onChange={(e) => {
+                const newLang = e.target.value;
+                setSelectedLang(newLang);
+                if (onReRunOcr) onReRunOcr(newLang);
+              }}
+              className="bg-slate-800 text-xs text-slate-200 border border-white/10 rounded-lg px-2 py-1.5 focus:outline-none focus:border-sky-400"
+            >
+              <option value="eng">English (eng)</option>
+              <option value="ron">Română (ron)</option>
+              <option value="fra">Français (fra)</option>
+              <option value="deu">Deutsch (deu)</option>
+              <option value="spa">Español (spa)</option>
+            </select>
+
+            <button
+              onClick={onClose}
+              className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         {/* Content Body */}

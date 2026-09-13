@@ -40,6 +40,29 @@ describe('PDF Compiler Engine', () => {
     expect(Math.round(firstPage.getHeight())).toBe(842);
   });
 
+  it('compiles a document with exact-fit page dimensions', async () => {
+    const pdfBytes = await compilePdfFromImages([samplePngBase64], {
+      pageSize: 'fit',
+    });
+
+    const doc = await PDFDocument.load(pdfBytes);
+    const page = doc.getPage(0);
+    // 2x2 sample image dimensions
+    expect(page.getWidth()).toBe(2);
+    expect(page.getHeight()).toBe(2);
+  });
+
+  it('compiles a document with US Letter page dimensions', async () => {
+    const pdfBytes = await compilePdfFromImages([samplePngBase64], {
+      pageSize: 'letter',
+    });
+
+    const doc = await PDFDocument.load(pdfBytes);
+    const page = doc.getPage(0);
+    expect(Math.round(page.getWidth())).toBe(612);
+    expect(Math.round(page.getHeight())).toBe(792);
+  });
+
   it('throws an error when an empty array of pages is supplied', async () => {
     await expect(compilePdfFromImages([])).rejects.toThrow(
       'At least one page image is required'
