@@ -72,7 +72,7 @@ async function startServer() {
   // Schedule hourly storage cleanup
   const CLEANUP_INTERVAL_MS = 60 * 60 * 1000;
   setInterval(() => {
-    tempStore.cleanExpiredFiles().then((cleaned) => {
+    tempStore.cleanExpiredFiles().then((cleaned: number) => {
       if (cleaned > 0) {
         app.log.info(`Cleaned ${cleaned} expired temporary files.`);
       }
