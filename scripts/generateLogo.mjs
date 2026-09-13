@@ -1,0 +1,183 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { Resvg } from '@resvg/resvg-js';
+
+function buildLogoSvg() {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <clipPath id="squircle-clip">
+      <rect x="24" y="24" width="976" height="976" rx="220" />
+    </clipPath>
+
+    <linearGradient id="cyan-lens" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+
+    <linearGradient id="gold-beak" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+
+    <linearGradient id="slate-plate-l" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+
+    <linearGradient id="slate-plate-r" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <filter id="subtle-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#000000" flood-opacity="0.16" />
+    </filter>
+  </defs>
+
+  <!-- Luxury White Squircle Container -->
+  <rect x="24" y="24" width="976" height="976" rx="220" fill="#ffffff" stroke="#e2e8f0" stroke-width="6" />
+
+  <g clip-path="url(#squircle-clip)">
+    <g transform="translate(512, 512)" filter="url(#subtle-shadow)">
+
+      <!-- Hexagonal Gateway Frame -->
+      <polygon points="
+        0,-390
+        338,-195
+        338,195
+        0,390
+        -338,195
+        -338,-195
+      " fill="none" stroke="#0f172a" stroke-width="36" stroke-linejoin="round" />
+
+      <polygon points="
+        0,-355
+        307,-177
+        307,177
+        0,355
+        -307,177
+        -307,-177
+      " fill="none" stroke="#38bdf8" stroke-width="4" opacity="0.45" stroke-dasharray="16, 12" />
+
+      <!-- Watertight Base Silhouette for Owl (Centered at 0, 0) -->
+      <path d="
+        M 0 -290
+        L 90 -290
+        L 170 -315
+        L 210 -160
+        L 250 -40
+        L 260 120
+        L 210 240
+        L 130 300
+        L 0 330
+        L -130 300
+        L -210 240
+        L -260 120
+        L -250 -40
+        L -210 -160
+        L -170 -315
+        L -90 -290
+        Z
+      " fill="#0b0f19" />
+
+      <!-- Ear Tufts / Crest Facets -->
+      <!-- Left Ear Tuft -->
+      <polygon points="-90,-290 -170,-315 -140,-200 -70,-220" fill="#1e293b" />
+      <polygon points="-170,-315 -210,-160 -140,-200" fill="#0f172a" />
+      <!-- Right Ear Tuft -->
+      <polygon points="90,-290 170,-315 140,-200 70,-220" fill="#334155" />
+      <polygon points="170,-315 210,-160 140,-200" fill="#1e293b" />
+
+      <!-- Brow & Forehead Crest -->
+      <polygon points="0,-290 -90,-290 -70,-220 0,-210" fill="#334155" />
+      <polygon points="0,-290 90,-290 70,-220 0,-210" fill="#475569" />
+      <polygon points="0,-210 -70,-220 0,-150" fill="#1e293b" />
+      <polygon points="0,-210 70,-220 0,-150" fill="#334155" />
+
+      <!-- Temples and Outer Head Shell -->
+      <polygon points="-210,-160 -140,-200 -120,-80 -220,-60" fill="#1e293b" />
+      <polygon points="210,-160 140,-200 120,-80 220,-60" fill="#334155" />
+      <polygon points="-220,-60 -120,-80 -130,50 -240,40" fill="#0f172a" />
+      <polygon points="220,-60 120,-80 130,50 240,40" fill="#1e293b" />
+
+      <!-- Left Eye Orbital & Facet Mask -->
+      <polygon points="0,-150 -70,-220 -140,-200 -120,-80 -60,-80 0,-90" fill="#0f172a" />
+      <!-- Right Eye Orbital & Facet Mask -->
+      <polygon points="0,-150 70,-220 140,-200 120,-80 60,-80 0,-90" fill="#1e293b" />
+
+      <!-- Left Optical Aperture Eye (Camera / Scanner Eye) -->
+      <!-- Outer Hex/Circle socket -->
+      <polygon points="-110,-75 -95,-120 -60,-130 -35,-95 -45,-55 -85,-50" fill="#0b0f19" stroke="#38bdf8" stroke-width="3" />
+      <!-- Glowing Iris -->
+      <circle cx="-75" cy="-88" r="28" fill="url(#cyan-lens)" />
+      <circle cx="-75" cy="-88" r="14" fill="#0b0f19" />
+      <!-- Lens reflection catchlight -->
+      <circle cx="-68" cy="-95" r="5" fill="#ffffff" opacity="0.9" />
+
+      <!-- Right Optical Aperture Eye -->
+      <polygon points="110,-75 95,-120 60,-130 35,-95 45,-55 85,-50" fill="#0b0f19" stroke="#38bdf8" stroke-width="3" />
+      <circle cx="75" cy="-88" r="28" fill="url(#cyan-lens)" />
+      <circle cx="75" cy="-88" r="14" fill="#0b0f19" />
+      <circle cx="82" cy="-95" r="5" fill="#ffffff" opacity="0.9" />
+
+      <!-- Geometric Beak (Gold/Amber Precision Indicator) -->
+      <polygon points="0,-90 -22,-45 0,25" fill="url(#gold-beak)" />
+      <polygon points="0,-90 22,-45 0,25" fill="#b45309" />
+      <polygon points="-22,-45 0,-30 22,-45 0,-15" fill="#fef3c7" opacity="0.3" />
+
+      <!-- Lower Facial Discs -->
+      <polygon points="-22,-45 0,25 -65,70 -130,50 -60,-80" fill="#1e293b" />
+      <polygon points="22,-45 0,25 65,70 130,50 60,-80" fill="#334155" />
+
+      <!-- Chest Armor Plates (Origami / Perspective Plane Facets) -->
+      <polygon points="0,25 -65,70 -40,160 0,140" fill="#334155" />
+      <polygon points="0,25 65,70 40,160 0,140" fill="#475569" />
+      
+      <polygon points="-65,70 -130,50 -150,150 -40,160" fill="#1e293b" />
+      <polygon points="65,70 130,50 150,150 40,160" fill="#334155" />
+
+      <polygon points="-130,50 -240,40 -230,150 -150,150" fill="#0f172a" />
+      <polygon points="130,50 240,40 230,150 150,150" fill="#1e293b" />
+
+      <!-- Lower Breastplate & Keel -->
+      <polygon points="0,140 -40,160 -60,250 0,280" fill="#1e293b" />
+      <polygon points="0,140 40,160 60,250 0,280" fill="#334155" />
+
+      <polygon points="-40,160 -150,150 -160,240 -60,250" fill="#0f172a" />
+      <polygon points="40,160 150,150 160,240 60,250" fill="#1e293b" />
+
+      <polygon points="0,280 -60,250 -90,300 0,330" fill="#0b0f19" />
+      <polygon points="0,280 60,250 90,300 0,330" fill="#1e293b" />
+
+      <!-- Precision Reticle Accents at the Base -->
+      <line x1="-120" y1="355" x2="120" y2="355" stroke="#38bdf8" stroke-width="3" opacity="0.6" stroke-dasharray="10, 8" />
+      <circle cx="0" cy="355" r="4" fill="#38bdf8" />
+    </g>
+  </g>
+</svg>`;
+}
+
+async function render() {
+  const docsImagesDir = path.resolve(process.cwd(), 'docs/images');
+  fs.mkdirSync(docsImagesDir, { recursive: true });
+
+  const svg = buildLogoSvg();
+  const svgPath = path.join(docsImagesDir, 'logo.svg');
+  const pngPath = path.join(docsImagesDir, 'logo.png');
+
+  fs.writeFileSync(svgPath, svg, 'utf-8');
+
+  const resvg = new Resvg(svg, {
+    fitTo: {
+      mode: 'width',
+      value: 1024,
+    },
+  });
+
+  const pngData = resvg.render().asPng();
+  fs.writeFileSync(pngPath, pngData);
+
+  console.log('✓ Successfully rendered logo.svg and logo.png at 1024x1024 into docs/images/');
+}
+
+render().catch(console.error);
